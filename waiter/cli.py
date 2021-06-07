@@ -29,5 +29,5 @@ def main():
         prog='waiter',
         version=waiter.__version__,
     )
-    args = utila.parse(parser)  # pylint:disable=W0613
+    args = utila.parse(parser)  # pylint:disable=W0612
     return utila.SUCCESS

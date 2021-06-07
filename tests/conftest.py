@@ -7,15 +7,23 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import os
+
 import pytest
+import utilasafe
 
 import tresor.config
+import waiter
 
 pytest_plugins = ['pytester', 'xdist']  # pylint: disable=invalid-name
+
+PUBLIC = os.path.join(waiter.ROOT, 'tests/rsa/public.pem')
+PRIVATE = os.path.join(waiter.ROOT, 'tests/rsa/private.pem')
 
 
 @pytest.fixture
 def tresornew(testdir, monkeypatch):
     with monkeypatch.context() as context:
         context.setenv(tresor.config.WAITER_TRESOR, str(testdir.tmpdir))
+        context.setenv(utilasafe.UTILASAFE_PUBLIC_KEY, str(PUBLIC))
         yield testdir.tmpdir

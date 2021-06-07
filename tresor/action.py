@@ -10,14 +10,16 @@
 import os
 
 import utila
+import utilasafe
 
 import tresor
 
 
 def insert_file(data: bytes):
     assert data, 'empty data'
+    encrypted = str(utilasafe.encrypt_public(data))
     path = filepath_new()
-    utila.file_create_binary(path, data)
+    utila.file_create(path, encrypted)
 
 
 def filepath_new():
