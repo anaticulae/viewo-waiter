@@ -18,7 +18,7 @@ ROOT = os.path.abspath(os.path.dirname(__file__))
 with open(os.path.join(ROOT, 'README.md'), encoding='utf8') as fp:
     README = fp.read()
 
-with open(os.path.join(ROOT, 'waiter/__init__.py'), encoding='utf8') as fp:
+with open(os.path.join(ROOT, 'viewo_waiter/__init__.py'), encoding='utf8') as fp:
     VERSION = re.search(r'__version__ = \'(.*?)\'', fp.read()).group(1)
 
 with open(os.path.join(ROOT, "requirements.txt"), encoding='utf8') as fp:
@@ -33,9 +33,9 @@ if __name__ == "__main__":
         description='receive user data',
         install_requires=REQUIRES,
         long_description=README,
-        name='waiter',
+        name='viewo_waiter',
         platforms='any',
-        url='https://dev.package.checkitweg.de/waiter',
+        url='https://dev.package.checkitweg.de/viewo_waiter',
         version=VERSION,
         zip_safe=False,  # create 'zip'-file if True. Don't do it!
         classifiers=[
@@ -44,9 +44,9 @@ if __name__ == "__main__":
         ],
         packages=[
             'tresor',
-            'waiter',
+            'viewo_waiter',
         ],
         entry_points={
-            'console_scripts': ['waiter = waiter.cli:main'],
+            'console_scripts': ['viewo_waiter = viewo_waiter.cli:main'],
         },
     )

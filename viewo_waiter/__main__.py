@@ -7,7 +7,7 @@
 # be prosecuted under federal law. Its content is company confidential.
 #==============================================================================
 
-from waiter.cli import main
+from viewo_waiter.cli import main
 
 if __name__ == "__main__":
     main()

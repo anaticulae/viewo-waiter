@@ -13,12 +13,12 @@ import pytest
 import utilasafe
 
 import tresor.config
-import waiter
+import viewo_waiter
 
 pytest_plugins = ['pytester', 'xdist']  # pylint: disable=invalid-name
 
-PUBLIC = os.path.join(waiter.ROOT, 'tests/rsa/public.pem')
-PRIVATE = os.path.join(waiter.ROOT, 'tests/rsa/private.pem')
+PUBLIC = os.path.join(viewo_waiter.ROOT, 'tests/rsa/public.pem')
+PRIVATE = os.path.join(viewo_waiter.ROOT, 'tests/rsa/private.pem')
 
 
 @pytest.fixture

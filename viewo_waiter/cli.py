@@ -10,7 +10,7 @@
 import utila
 import utila.cli
 
-import waiter
+import viewo_waiter
 
 COMMANDS = []  # add additional commands here
 
@@ -26,8 +26,8 @@ def main():
             cacheflag=False,
             waitingflag=False,
         ),
-        prog='waiter',
-        version=waiter.__version__,
+        prog='viewo_waiter',
+        version=viewo_waiter.__version__,
     )
     args = utila.parse(parser)  # pylint:disable=W0612
     return utila.SUCCESS
