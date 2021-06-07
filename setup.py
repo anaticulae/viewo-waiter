@@ -45,6 +45,8 @@ if __name__ == "__main__":
         packages=[
             'tresor',
             'viewo_waiter',
+            'viewo_waiter.api_',
+            'viewo_waiter.api_.document',
         ],
         entry_points={
             'console_scripts': ['viewo_waiter = viewo_waiter.cli:main'],
