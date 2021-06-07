@@ -20,6 +20,7 @@ def insert_file(data: bytes):
     encrypted = str(utilasafe.encrypt_public(data))
     path = filepath_new()
     utila.file_create(path, encrypted)
+    return path
 
 
 def filepath_new():
