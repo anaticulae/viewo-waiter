@@ -7,6 +7,9 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+Flask-Login>=0.5.0<1.0.0
+
+link>=2.7.0<3.0.0
 utila>=2.36.0<3.0.0
 utilasafe>=0.2.0<1.0.0
 viewo_api>=0.1.0<1.0.0
