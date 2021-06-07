@@ -14,6 +14,7 @@ import utilasafe
 
 import tresor.config
 import viewo_waiter
+import viewo_waiter.app
 
 pytest_plugins = ['pytester', 'xdist']  # pylint: disable=invalid-name
 
@@ -27,3 +28,37 @@ def tresornew(testdir, monkeypatch):
         context.setenv(tresor.config.WAITER_TRESOR, str(testdir.tmpdir))
         context.setenv(utilasafe.UTILASAFE_PUBLIC_KEY, str(PUBLIC))
         yield testdir.tmpdir
+
+
+@pytest.fixture
+def app(testdir):
+    """Create and configure a new app instance for each test."""
+
+    todo = os.path.join(testdir.tmpdir, 'todo')
+    ready = os.path.join(testdir.tmpdir, 'ready')
+
+    os.makedirs(todo)
+    os.makedirs(ready)
+
+    assert os.path.exists(todo), todo
+    assert os.path.exists(ready), ready
+
+    # create the app with common test config
+    config = {
+        'TESTING': True,
+        'COMMON': testdir.tmpdir,
+        'TODO': todo,
+        'READY': ready,
+    }
+    # disable tracking in test run # TODO: MOVE TO CONFIG
+    application = viewo_waiter.app.create_app(config=config)
+
+    # ensure to create app context: TODO: THINK ABOUT IT
+    with application.app_context():
+        yield application
+
+
+@pytest.fixture
+def client(app):  # pylint:disable=W0621
+    """A test client for the app."""
+    return app.test_client()

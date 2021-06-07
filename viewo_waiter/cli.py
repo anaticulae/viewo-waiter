@@ -7,27 +7,20 @@
 # be prosecuted under federal law. Its content is company confidential.
 #==============================================================================
 
+import argparse
+
 import utila
-import utila.cli
 
-import viewo_waiter
-
-COMMANDS = []  # add additional commands here
+import viewo_waiter.app
 
 
 @utila.saveme
 def main():
-    parser = utila.cli.create_parser(
-        COMMANDS,
-        config=utila.ParserConfiguration(
-            outputparameter=False,
-            inputparameter=False,
-            pages=False,
-            cacheflag=False,
-            waitingflag=False,
-        ),
-        prog='viewo_waiter',
-        version=viewo_waiter.__version__,
-    )
-    args = utila.parse(parser)  # pylint:disable=W0612
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--host', default='localhost')
+    parser.add_argument('--port', default=5001)
+    argv = parser.parse_args()
+    host, port = argv.host, int(argv.port)
+    main_ = viewo_waiter.app.create_app()
+    main_.run(host=host, port=port)
     return utila.SUCCESS

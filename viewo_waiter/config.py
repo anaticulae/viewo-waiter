@@ -9,3 +9,6 @@
 
 MAX_FILE_SIZE = 16 * 1024 * 1024  # 16 Megabyte
 FILE_READ_TIMEOUT = 10  # 10 seconds timeout
+
+SECRET_KEY = b'helmut_max_power_abs29.nsTODOThisIsVerySecreyISwarTODO'
+API_PREFIX = '/api/v0'
