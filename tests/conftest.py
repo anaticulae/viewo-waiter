@@ -7,4 +7,15 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import pytest
+
+import tresor.config
+
 pytest_plugins = ['pytester', 'xdist']  # pylint: disable=invalid-name
+
+
+@pytest.fixture
+def tresornew(testdir, monkeypatch):
+    with monkeypatch.context() as context:
+        context.setenv(tresor.config.WAITER_TRESOR, str(testdir.tmpdir))
+        yield testdir.tmpdir

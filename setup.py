@@ -43,6 +43,7 @@ if __name__ == "__main__":
             'Programming Language :: Python :: 3.8',
         ],
         packages=[
+            'tresor',
             'waiter',
         ],
         entry_points={
