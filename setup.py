@@ -18,7 +18,8 @@ ROOT = os.path.abspath(os.path.dirname(__file__))
 with open(os.path.join(ROOT, 'README.md'), encoding='utf8') as fp:
     README = fp.read()
 
-with open(os.path.join(ROOT, 'viewo_waiter/__init__.py'), encoding='utf8') as fp:
+with open(os.path.join(ROOT, 'viewo_waiter/__init__.py'),
+          encoding='utf8') as fp:
     VERSION = re.search(r'__version__ = \'(.*?)\'', fp.read()).group(1)
 
 with open(os.path.join(ROOT, "requirements.txt"), encoding='utf8') as fp:

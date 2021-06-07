@@ -8,19 +8,22 @@
 # =============================================================================
 
 import collections
+import os
 import urllib.error
 import urllib.request
 
-import flask.request
+import flask
 import utila
-
 import viewo_api
+import werkzeug.utils
+
 import viewo_waiter.config
 
 HEADER_READ_SIZE = 1024
 EXPECTED_PDFSTART = b'%PDF-1.'
 
 Loaded = collections.namedtuple('Loaded', 'pdf filename')
+
 
 def receive_resource() -> Loaded:  # pylint:disable=R0911
     # TODO: SECURITY: VERIFY THIS METHOD

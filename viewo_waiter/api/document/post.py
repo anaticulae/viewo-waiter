@@ -9,14 +9,14 @@
 
 import flask
 import utila
-
 import viewo_api
-import viewo_waiter.api.documents
+
+import viewo_waiter.api.document
 import viewo_waiter.api_.document.create
 import viewo_waiter.api_.document.upload
 
 
-@viewo_waiter.api.documents.api_documents.route('/documents', methods=['POST'])
+@viewo_waiter.api.document.api_documents.route('/documents', methods=['POST'])
 def document_create() -> str:
     resource = viewo_waiter.api_.document.upload.receive_resource()
     if not hasattr(resource, 'pdf'):

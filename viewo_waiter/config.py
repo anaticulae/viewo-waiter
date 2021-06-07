@@ -8,4 +8,4 @@
 # =============================================================================
 
 MAX_FILE_SIZE = 16 * 1024 * 1024  # 16 Megabyte
-FILE_READ_TIMEOUT = 10 # 10 seconds timeout
+FILE_READ_TIMEOUT = 10  # 10 seconds timeout

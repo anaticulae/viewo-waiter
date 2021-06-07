@@ -7,11 +7,18 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import os
+
 import flask_login
 import link
+import viewo_api.config
+import viewo_api.user
+import viewo_api.user.create
+import viewo_api.user.password
+import viewo_api.user.update
 
 
-def create_document(resource, public:bool):
+def create_document(resource, public: bool):
     userid, password = user_account(public)
     document = store_resource(resource.pdf, resource.filename, userid)
     return document, userid, password
@@ -21,15 +28,16 @@ def user_account(public: bool = False):
     if public:
         nopassword = ''
         return link.PUBLIC_OWNER, nopassword
+    password = viewo_api.user.password.generate()
     userid = flask_login.current_user.get_id()
     if not userid:
         # generate new random user
-        userid, password = viewo.api.users.post.create_user()
+        userid, password = viewo_api.user.create.create_user(password)
         # TODO: REFACTOR
-        viewo.user.auth.login_user(userid)
+        # viewo_api.user.auth.login_user(userid)
     else:
         password = ''  # nosec
-    viewo.user.auth.public_password_set(password)
+    # viewo.user.auth.public_password_set(password)
     return userid, password
 
 
@@ -37,10 +45,10 @@ def store_resource(pdf, filename, userid):
     todo = link.create_todo(
         file=pdf,
         filename=filename,
-        todopath=viewo.path.todo(),
+        todopath=viewo_api.config.todo(),
         owner=userid,
     )
     _, resource = os.path.split(todo)
     # allow user to access document
-    viewo.api.users.utils.user.user_document_append(userid, resource)
+    viewo_api.user.update.user_append_document(userid, resource)
     return resource
