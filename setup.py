@@ -45,6 +45,8 @@ if __name__ == "__main__":
         packages=[
             'tresor',
             'viewo_waiter',
+            'viewo_waiter.api',
+            'viewo_waiter.api.document',
             'viewo_waiter.api_',
             'viewo_waiter.api_.document',
         ],
