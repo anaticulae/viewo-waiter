@@ -18,14 +18,14 @@ import viewo_waiter.api_.document.upload
 
 @viewo_waiter.api.document.api_documents.route('/documents', methods=['POST'])
 def document_create() -> str:
-    resource = viewo_waiter.api_.document.upload.receive_resource()
+    resource = viewo_waiter.api_.document.upload.receive_resource(flask.request)
     if not hasattr(resource, 'pdf'):
         # could not load resource, provide error message
         return resource
 
     documentid, userid, password = viewo_waiter.api_.document.create.create_document(
         resource,
-        public=public(),
+        public=public(flask.request),
     )
 
     result = viewo_api.success(
@@ -41,7 +41,7 @@ def document_create() -> str:
     return result
 
 
-def public() -> bool:
+def public(request) -> bool:
     # if public flag is provided, document is accessable by all user
-    result = utila.str2bool(flask.request.args.get('public', False))
+    result = utila.str2bool(request.args.get('public', False))
     return result

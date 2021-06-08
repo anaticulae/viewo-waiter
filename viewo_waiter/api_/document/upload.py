@@ -12,7 +12,6 @@ import os
 import urllib.error
 import urllib.request
 
-import flask
 import utila
 import werkzeug.utils
 
@@ -25,11 +24,11 @@ EXPECTED_PDFSTART = b'%PDF-1.'
 Loaded = collections.namedtuple('Loaded', 'pdf filename')
 
 
-def receive_resource() -> Loaded:  # pylint:disable=R0911
+def receive_resource(request) -> Loaded:  # pylint:disable=R0911
     # TODO: SECURITY: VERIFY THIS METHOD
-    if 'url' in flask.request.form:
+    if 'url' in request.form:
         # provide resource via link as url-field
-        posturl = flask.request.form['url']
+        posturl = request.form['url']
         try:
             pdf = curlpdf(posturl)
             filename = 'cloud.pdf'
@@ -41,9 +40,9 @@ def receive_resource() -> Loaded:  # pylint:disable=R0911
             return viewo_api.bad('invalid url')
     else:
         # upload resource via upload-file dialog
-        if not flask.request.files:
+        if not request.files:
             return viewo_api.bad('missing `file` field')
-        pdf = flask.request.files['file']
+        pdf = request.files['file']
         if pdf.filename == '':
             # if user does not select file, browser also submit an empty
             # part without filename
