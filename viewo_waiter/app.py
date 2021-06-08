@@ -10,6 +10,7 @@
 import configo
 import flask
 import flask_login
+import utila
 
 import viewo_api
 import viewo_waiter.config
@@ -30,6 +31,12 @@ def create_app(config=None) -> flask.Flask:
         url_prefix=viewo_waiter.config.API_PREFIX,
     )
     return result
+
+
+def run_app(host, port, config=None):
+    created = create_app(config)
+    logsetup(created, host, port)
+    created.run(host=host, port=port)
 
 
 def configure(app, config):
@@ -63,6 +70,15 @@ def create_loginmanager(app):
 
 def load_user(userid):
     return viewo_api.FlaskUser(identifier=userid)
+
+
+def logsetup(app, host, port):
+    utila.log('\nSETUP VIEWO_WAITER\n')
+    utila.log(f'host: {host}')
+    utila.log(f'port: {port}')
+    for key in ['COMMON', 'TODO', 'READY']:
+        utila.log(f'{key.lower()}:{app.config[key]}')
+    utila.log()
 
 
 # def localize_callback(message: str) -> str:

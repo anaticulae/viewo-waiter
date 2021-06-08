@@ -21,6 +21,5 @@ def main():
     parser.add_argument('--port', default=5001)
     argv = parser.parse_args()
     host, port = argv.host, int(argv.port)
-    main_ = viewo_waiter.app.create_app()
-    main_.run(host=host, port=port)
+    viewo_waiter.app.run_app(host, port)
     return utila.SUCCESS
