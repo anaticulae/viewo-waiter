@@ -58,6 +58,31 @@ def receive_resource() -> Loaded:  # pylint:disable=R0911
     return Loaded(pdf, filename)
 
 
+def curlpdf(url: str) -> 'TmpFile':
+    try:
+        with urllib.request.urlopen(
+                url,
+                timeout=viewo_waiter.config.FILE_READ_TIMEOUT,
+        ) as webfile:
+            header = webfile.read(HEADER_READ_SIZE)
+            # %PDF-1.5 for example
+            if not valid_pdf(header):
+                utila.error(f'no pdf file: {url}')
+                raise InvalidResource(url)
+            todo = viewo_waiter.config.MAX_FILE_SIZE - HEADER_READ_SIZE
+            content = webfile.read(todo)
+            if webfile.read(1) != b'':
+                # there are some bytes left
+                utila.error(f'file too large: {url}')
+                raise FileTooLarge(url)
+    except urllib.error.URLError as error:
+        utila.error(f'invalid url: {url}')
+        raise InvalidUrl(url) from error
+
+    filecontent = header + content
+    return TmpFile(filecontent)
+
+
 class CurlError(ValueError):
 
     def __init__(self, url):
@@ -84,31 +109,6 @@ class TmpFile:
 
     def save(self, path: str):
         utila.file_replace_binary(path, self.content)
-
-
-def curlpdf(url: str) -> TmpFile:
-    try:
-        with urllib.request.urlopen(
-                url,
-                timeout=viewo_waiter.config.FILE_READ_TIMEOUT,
-        ) as webfile:
-            header = webfile.read(HEADER_READ_SIZE)
-            # %PDF-1.5 for example
-            if not valid_pdf(header):
-                utila.error(f'no pdf file: {url}')
-                raise InvalidResource(url)
-            todo = viewo_waiter.config.MAX_FILE_SIZE - HEADER_READ_SIZE
-            content = webfile.read(todo)
-            if webfile.read(1) != b'':
-                # there are some bytes left
-                utila.error(f'file too large: {url}')
-                raise FileTooLarge(url)
-    except urllib.error.URLError as error:
-        utila.error(f'invalid url: {url}')
-        raise InvalidUrl(url) from error
-
-    filecontent = header + content
-    return TmpFile(filecontent)
 
 
 def valid_pdf(data):
