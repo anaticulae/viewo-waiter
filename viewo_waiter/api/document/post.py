@@ -9,6 +9,7 @@
 
 import flask
 import utila
+import werkzeug.routing
 
 import viewo_api
 import viewo_waiter.api.document
@@ -27,16 +28,13 @@ def document_create() -> str:
         resource,
         public=public(flask.request),
     )
+    optional = optional_links(documentid)
 
     result = viewo_api.success(
         userid=userid,
         password=password,
         documentid=documentid,
-        # document=flask.url_for(
-        #     'api_documents.document_get',
-        #     documentid=resource,
-        # ),
-        # link=flask.url_for('waiting.waiting_view', process=resource),
+        **optional,
     )
     return result
 
@@ -45,3 +43,22 @@ def public(request) -> bool:
     # if public flag is provided, document is access able by all user
     result = utila.str2bool(request.args.get('public', False))
     return result
+
+
+def optional_links(documentid):
+    """Optional links to forward user.
+
+    These are not necessary for usage as a service.
+    """
+    try:
+        # yapf:disable
+        optional = dict(
+            document=flask.url_for('api_documents.document_get', documentid=documentid),
+            link=flask.url_for('waiting.waiting_view', process=documentid),
+        )
+        # yapf:enable
+    except werkzeug.routing.BuildError:
+        optional = {}
+        utila.debug('skip routes: api_documents.document_get, '
+                    'waiting.waiting_view')
+    return optional
