@@ -2,6 +2,12 @@
 
 Every noteable change is logged here.
 
+## v0.5.2
+
+### Feature
+
+* store public password (5b41168f6df6)
+
 ## v0.5.1
 
 ## v0.5.0
