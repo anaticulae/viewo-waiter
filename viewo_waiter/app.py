@@ -11,8 +11,8 @@ import configo
 import flask
 import flask_login
 import utila
-
 import viewo_api
+
 import viewo_waiter
 import viewo_waiter.config
 

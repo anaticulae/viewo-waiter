@@ -9,9 +9,9 @@
 
 import flask
 import utila
+import viewo_api
 import werkzeug.routing
 
-import viewo_api
 import viewo_waiter.api.document
 import viewo_waiter.api_.document.create
 import viewo_waiter.api_.document.upload
