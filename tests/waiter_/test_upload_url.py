@@ -12,6 +12,7 @@ import http
 import link
 import power
 import pytest
+import utilatest
 
 import tests
 
@@ -19,7 +20,7 @@ import tests
 def test_api_upload_from_url(client, httpserver):
     httpserver.serve_content(open(power.MASTER072_PDF, mode='br').read())
     source = httpserver.url
-    result = tests.apipost(client, '/documents', data={'url': source})
+    result = utilatest.apipost(client, '/documents', data={'url': source})
     assert result['documentid']
 
 
@@ -28,7 +29,7 @@ def test_api_upload_from_url(client, httpserver):
     pytest.param(f'file:///{__file__}', 'require pdf', id='no pdf'),
 ])
 def test_api_upload_from_url_with_error(source, client, expected_error):
-    result = tests.apipost(
+    result = utilatest.apipost(
         client,
         '/documents',
         data={'url': source},
@@ -41,7 +42,7 @@ def test_api_upload_from_url_too_large_file(client, testdir, httpserver):
     content = b'%PDF-1.5' + b'0' * 1024 * 1024 * 100  # 100 MB
     httpserver.serve_content(content)
     source = httpserver.url
-    tests.apipost(
+    utilatest.apipost(
         client,
         page='/documents',
         data={'url': source},
@@ -54,7 +55,7 @@ def test_api_upload_file_url(client):
     # count files in todo folder
     files_before = link.count_todo()
 
-    tests.apiupload(
+    utilatest.apiupload(
         client,
         page='/documents',
         field='file',
