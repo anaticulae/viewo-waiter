@@ -13,8 +13,8 @@ import flask_login
 import utila
 
 import viewo_api
+import viewo_waiter
 import viewo_waiter.config
-from viewo_waiter.api.document import *  # pylint:disable=wildcard-import,W0614
 
 
 def create_app(config=None) -> flask.Flask:
@@ -27,7 +27,7 @@ def create_app(config=None) -> flask.Flask:
 
     # data API
     result.register_blueprint(
-        viewo_waiter.api.document.api_documents,
+        viewo_waiter.api_documents,
         url_prefix=viewo_waiter.config.API_PREFIX,
     )
     return result
