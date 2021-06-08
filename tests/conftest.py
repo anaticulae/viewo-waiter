@@ -11,15 +11,19 @@ import os
 
 import pytest
 import utilasafe
+import utilatest
 
 import tresor.config
 import viewo_waiter
 import viewo_waiter.app
+import viewo_waiter.config
 
 pytest_plugins = ['pytester', 'xdist']  # pylint: disable=invalid-name
 
 PUBLIC = os.path.join(viewo_waiter.ROOT, 'tests/rsa/public.pem')
 PRIVATE = os.path.join(viewo_waiter.ROOT, 'tests/rsa/private.pem')
+
+utilatest.setup(viewo_waiter.config.API_PREFIX)
 
 
 @pytest.fixture
