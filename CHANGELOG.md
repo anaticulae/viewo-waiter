@@ -2,6 +2,12 @@
 
 Every noteable change is logged here.
 
+## v0.4.0
+
+### Feature
+
+* extend public API (db830f18e460)
+
 ## v0.3.0
 
 ### Feature
