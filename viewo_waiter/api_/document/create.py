@@ -30,7 +30,7 @@ def user_account(public: bool = False):
     if public:
         nopassword = ''
         return link.PUBLIC_OWNER, nopassword
-    password = viewo_api.user.password.generate()
+    password = viewo_api.password_generate()
     userid = flask_login.current_user.get_id()
     if not userid:
         # generate new random user
