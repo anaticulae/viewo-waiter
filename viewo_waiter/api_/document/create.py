@@ -11,6 +11,7 @@ import os
 
 import flask_login
 import link
+
 import viewo_api.config
 import viewo_api.user
 import viewo_api.user.create
@@ -32,7 +33,8 @@ def user_account(public: bool = False):
     userid = flask_login.current_user.get_id()
     if not userid:
         # generate new random user
-        userid, password = viewo_api.user.create.create_user(password)
+        created = viewo_api.user.create.create_user(password)
+        userid = created.userid
         # TODO: REFACTOR
         # viewo_api.user.auth.login_user(userid)
     else:

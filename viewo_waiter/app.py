@@ -9,7 +9,9 @@
 
 import configo
 import flask
+import flask_login
 
+import viewo_api
 import viewo_waiter.config
 from viewo_waiter.api.document import *  # pylint:disable=wildcard-import,W0614
 
@@ -49,3 +51,23 @@ def configure(appi, config):
         # Test environment
         # load the test config if passed in
         appi.config.update(config)
+    create_loginmanager(appi)
+
+
+def create_loginmanager(app):
+    loginmanager = flask_login.LoginManager()
+    loginmanager.init_app(app)
+    loginmanager._user_callback = load_user  # pylint:disable=W0212
+    # loginmanager.localize_callback = localize_callback
+
+
+def load_user(userid):
+    return viewo_api.FlaskUser(identifier=userid)
+
+
+# def localize_callback(message: str) -> str:
+#     if message == flask_login.LOGIN_MESSAGE:
+#         return 'Bitte einloggen um Zugriff zu erhalten.'
+#     if message == flask_login.LOGIN_MESSAGE:
+#         return 'Bitte erneut einloggen um Zugriff zu erhalten.'
+#     return message

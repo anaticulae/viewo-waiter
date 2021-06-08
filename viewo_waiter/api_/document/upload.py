@@ -14,9 +14,9 @@ import urllib.request
 
 import flask
 import utila
-import viewo_api
 import werkzeug.utils
 
+import viewo_api
 import viewo_waiter.config
 
 HEADER_READ_SIZE = 1024
