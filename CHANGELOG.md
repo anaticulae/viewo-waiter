@@ -2,6 +2,12 @@
 
 Every noteable change is logged here.
 
+## v0.3.0
+
+### Feature
+
+* add optional resource references (127561b515cc)
+
 ## v0.2.0
 
 ### Feature
