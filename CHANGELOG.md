@@ -2,6 +2,20 @@
 
 Every noteable change is logged here.
 
+## v0.2.0
+
+### Feature
+
+* log startup configuration (a488c197003a)
+* add basic app (7c648b164287)
+* move document API (924d221f5ba0)
+* move document upload API (f12eadf11815)
+* return created file path (a0eaec6228ca)
+
+### Fix
+
+* adjust upload mechanism (a2134c41280b)
+
 ## v0.1.0
 
 ### Feature
