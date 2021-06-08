@@ -42,6 +42,6 @@ def document_create() -> str:
 
 
 def public(request) -> bool:
-    # if public flag is provided, document is accessable by all user
+    # if public flag is provided, document is access able by all user
     result = utila.str2bool(request.args.get('public', False))
     return result

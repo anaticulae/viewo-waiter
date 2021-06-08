@@ -32,26 +32,26 @@ def create_app(config=None) -> flask.Flask:
     return result
 
 
-def configure(appi, config):
+def configure(app, config):
     """Set environment for application. Decide between test environment and
     production environment
 
     Args:
-        appi(Flask): application to configure, which holds config
+        app(Flask): application to configure, which holds config
         config(dict): vars to export as global environment
     """
     if config is None:
         # Production environment
         # load the instance config, if it exists
         common_, todo_, ready_ = configo.environment()
-        appi.config['COMMON'] = common_
-        appi.config['TODO'] = todo_
-        appi.config['READY'] = ready_
+        app.config['COMMON'] = common_
+        app.config['TODO'] = todo_
+        app.config['READY'] = ready_
     else:
         # Test environment
         # load the test config if passed in
-        appi.config.update(config)
-    create_loginmanager(appi)
+        app.config.update(config)
+    create_loginmanager(app)
 
 
 def create_loginmanager(app):
