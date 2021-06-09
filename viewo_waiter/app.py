@@ -15,6 +15,7 @@ import viewo_api
 
 import viewo_waiter
 import viewo_waiter.config
+from viewo_waiter.api.document import *  # pylint:disable=W0401,W0614
 
 
 def create_app(config=None) -> flask.Flask:
