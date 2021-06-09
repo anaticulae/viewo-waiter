@@ -11,7 +11,6 @@ import os
 
 import flask_login
 import link
-
 import viewo_api
 import viewo_api.config
 import viewo_api.user
