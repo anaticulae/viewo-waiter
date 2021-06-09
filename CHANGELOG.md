@@ -2,6 +2,16 @@
 
 Every noteable change is logged here.
 
+## v0.5.3
+
+### Feature
+
+* add verbose option (e0da5cbe48e0)
+
+### Fix
+
+* ensure importing blueprint correctly (0c483009afcd)
+
 ## v0.5.2
 
 ### Feature
