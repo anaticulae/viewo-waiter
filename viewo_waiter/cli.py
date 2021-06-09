@@ -19,7 +19,16 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--host', default='localhost')
     parser.add_argument('--port', default=5001)
+    parser.add_argument(
+        '--verbose',
+        '-V',
+        default=0,
+        action='count',
+        help='increase verbosity of logging',
+    )
     argv = parser.parse_args()
     host, port = argv.host, int(argv.port)
+    # set verbose level
+    utila.level_setup(argv.verbose)
     viewo_waiter.app.run_app(host, port)
     return utila.SUCCESS
