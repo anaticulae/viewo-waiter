@@ -2,6 +2,12 @@
 
 Every noteable change is logged here.
 
+## v0.6.0
+
+### Feature
+
+* add safe flag to store document in tresor (b633a7b35dd7)
+
 ## v0.5.3
 
 ### Feature
