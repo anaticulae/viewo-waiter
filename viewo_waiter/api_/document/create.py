@@ -11,6 +11,7 @@ import os
 
 import flask_login
 import link
+import utila
 import viewo_api
 import viewo_api.config
 import viewo_api.user
@@ -18,10 +19,12 @@ import viewo_api.user.create
 import viewo_api.user.password
 import viewo_api.user.update
 
+import tresor
 
-def create_document(resource, public: bool):
+
+def create_document(resource, public: bool, usesafe: bool = False):
     userid, password = user_account(public)
-    document = store_resource(resource.pdf, resource.filename, userid)
+    document = store_resource(resource.pdf, resource.filename, userid, usesafe)
     return document, userid, password
 
 
@@ -41,13 +44,17 @@ def user_account(public: bool = False):
     return userid, password
 
 
-def store_resource(pdf, filename, userid):
+def store_resource(pdf, filename, userid, usesafe: bool = False):
     todo = link.create_todo(
         file=pdf,
         filename=filename,
         todopath=viewo_api.config.todo(),
         owner=userid,
     )
+    if usesafe:
+        storedpath = os.path.join(todo, os.path.split(todo)[1])
+        loaded = utila.file_read_binary(storedpath)
+        tresor.insert_file(loaded, wait=False)
     _, resource = os.path.split(todo)
     # allow user to access document
     viewo_api.user.update.user_append_document(userid, resource)

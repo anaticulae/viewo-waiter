@@ -20,6 +20,12 @@ def main():
     parser.add_argument('--host', default='localhost')
     parser.add_argument('--port', default=5001)
     parser.add_argument(
+        '--safe',
+        default=False,
+        action='store_true',
+        help='store resource in encryption container',
+    )
+    parser.add_argument(
         '--verbose',
         '-V',
         default=0,
@@ -30,5 +36,10 @@ def main():
     host, port = argv.host, int(argv.port)
     # set verbose level
     utila.level_setup(argv.verbose)
-    viewo_waiter.app.run_app(host, port)
+    config = dict(safe=argv.safe,)
+    viewo_waiter.app.run_app(
+        host,
+        port,
+        config,
+    )
     return utila.SUCCESS

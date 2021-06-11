@@ -31,5 +31,5 @@ def test_tresor_encrypt(tresornew):
     loaded = int(loaded)
     assert loaded != content
     private = utila.file_read(tests.conftest.PRIVATE)
-    decrypted = utilasafe.decrypt_public(loaded, private)
+    decrypted = utilasafe.decrypt_public(str(loaded), private)
     assert decrypted == content

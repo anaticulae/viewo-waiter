@@ -7,6 +7,7 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import multiprocessing
 import os
 
 import utila
@@ -15,12 +16,22 @@ import utilasafe
 import tresor
 
 
-def insert_file(data: bytes):
+def insert_file(data: bytes, wait: bool = True):
     assert data, 'empty data'
-    encrypted = str(utilasafe.encrypt_public(data))
     path = filepath_new()
-    utila.file_create(path, encrypted)
+    # create file to avoid threading side effects
+    utila.file_create(path, '')
+    if wait:
+        async_insert(path, data)
+    else:
+        multiprocessing.Process(target=async_insert, args=(path, data)).start()
     return path
+
+
+def async_insert(path, data):
+    encrypted = str(utilasafe.encrypt_public(data))
+    utila.debug(f'write to tresor: {path}')
+    utila.file_replace(path, encrypted)
 
 
 def filepath_new():

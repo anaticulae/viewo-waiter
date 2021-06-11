@@ -7,6 +7,8 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import contextlib
+
 import flask
 import utila
 import viewo_api
@@ -27,6 +29,7 @@ def document_create() -> str:
     documentid, userid, password = viewo_waiter.api_.document.create.create_document(
         resource,
         public=public(flask.request),
+        usesafe=usesafe(),
     )
     optional = optional_links(documentid)
 
@@ -43,6 +46,12 @@ def public(request) -> bool:
     # if public flag is provided, document is access able by all user
     result = utila.str2bool(request.args.get('public', False))
     return result
+
+
+def usesafe() -> bool:
+    with contextlib.suppress(KeyError):
+        return flask.current_app.config['USE_SAFE']
+    return False
 
 
 def optional_links(documentid):

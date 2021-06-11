@@ -21,9 +21,14 @@ from viewo_waiter.api.document import *  # pylint:disable=W0401,W0614
 def create_app(config=None) -> flask.Flask:
     # Flask determines template- and static-folder automatically.
     result = flask.Flask(__name__)
-
+    if not config:
+        config = {}
+    result.config['USE_SAFE'] = config.get('safe', False)
     result.config['MAX_CONTENT_LENGTH'] = viewo_waiter.config.MAX_FILE_SIZE
     result.secret_key = viewo_waiter.config.SECRET_KEY
+    # remove safe flag: TODO: DIRTY
+    if 'safe' in config:
+        del config['safe']
     configure(result, config)
 
     # data API
@@ -48,7 +53,7 @@ def configure(app, config):
         app(Flask): application to configure, which holds config
         config(dict): vars to export as global environment
     """
-    if config is None:
+    if not config:
         # Production environment
         # load the instance config, if it exists
         common_, todo_, ready_ = configo.environment()
@@ -77,7 +82,7 @@ def logsetup(app, host, port):
     utila.log('\nSETUP VIEWO_WAITER\n')
     utila.log(f'host: {host}')
     utila.log(f'port: {port}')
-    for key in ['COMMON', 'TODO', 'READY']:
+    for key in 'USE_SAFE COMMON TODO READY'.split():
         utila.log(f'{key.lower()}:{app.config[key]}')
     utila.log()
 
