@@ -24,7 +24,7 @@ EXPECTED_PDFSTART = b'%PDF-1.'
 Loaded = collections.namedtuple('Loaded', 'pdf filename')
 
 
-def receive_resource(request) -> Loaded:  # pylint:disable=R0911
+def receive_resource(request) -> Loaded:  # pylint:disable=R0911,R0912
     # TODO: SECURITY: VERIFY THIS METHOD
     if 'url' in request.form:
         # provide resource via link as url-field
@@ -43,7 +43,7 @@ def receive_resource(request) -> Loaded:  # pylint:disable=R0911
         if not request.files:
             return viewo_api.bad('missing `file` field')
         pdf = request.files['file']
-        if pdf.filename == '':
+        if not pdf.filename:
             # if user does not select file, browser also submit an empty
             # part without filename
             return viewo_api.bad('empty `file` field')
