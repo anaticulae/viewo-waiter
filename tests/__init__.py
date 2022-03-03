@@ -18,7 +18,7 @@ import werkzeug.datastructures
 
 import viewo_waiter.config
 
-MINIMAL = power.DOCU07_PDF
+MINIMAL = power.DOCU007_PDF
 
 
 def apiupload(
