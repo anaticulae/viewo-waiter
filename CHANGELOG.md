@@ -2,6 +2,12 @@
 
 Every noteable change is logged here.
 
+## v0.6.2
+
+### Fix
+
+* do not fail missing value to log (2100318340aa)
+
 ## v0.6.1
 
 ### Documentation
