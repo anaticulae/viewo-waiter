@@ -83,7 +83,7 @@ def logsetup(app, host, port):
     utila.log(f'host: {host}')
     utila.log(f'port: {port}')
     for key in 'USE_SAFE COMMON TODO READY'.split():
-        utila.log(f'{key.lower()}:{app.config[key]}')
+        utila.log(f'{key.lower()}:{app.config.get(key, None)}')
     utila.log()
 
 
