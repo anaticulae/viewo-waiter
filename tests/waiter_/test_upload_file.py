@@ -8,16 +8,43 @@
 # =============================================================================
 
 import http
+import threading
+import time
 
 import link
+import utila
 import utilatest
 
 import tests
+import viewo_waiter.app
 
 
 def test_api_upload_document_done(client):
     result = utilatest.apiupload(client, '/documents', 'file', tests.MINIMAL)
     assert result['documentid']
+
+
+def test_api_upload_directory_error(testdir):
+    """Try to upload a windows folder."""
+    host, port = 'localhost', 2345
+    server = threading.Thread(
+        target=viewo_waiter.app.run_app,
+        kwargs=dict(
+            host=host,
+            port=port,
+            config=dict(TESTING=True),
+        ),
+        daemon=True,
+    )
+    server.start()
+    # wait for startup
+    time.sleep(1)
+    api = f'http://{host}:{port}/api/v0/documents'
+    filepath = testdir.tmpdir
+    cmd = f'curl -F "file=@{filepath}" {api}'
+    # TODO: VERIFY EXPECTED RESULT LATER
+    completed = utila.run(cmd, expect=None)
+    assert 'read function returned funny value' in completed.stderr
 
 
 def test_api_upload_document_wrong_datatype(client):
