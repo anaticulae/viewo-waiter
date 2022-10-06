@@ -3,7 +3,7 @@ short = viewo_waiter
 name = receive user data
 source = viewo_waiter
     tresor
-spelling = True
+#spelling = True
 
 [release]
 fail_on_finding = True
