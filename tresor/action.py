@@ -29,9 +29,9 @@ def insert_file(data: bytes, wait: bool = True):
 
 
 def async_insert(path, data):
-    encrypted = str(utilasafe.encrypt_public(data))
+    encrypted = utilasafe.encrypt_password(data)
     utila.debug(f'write to tresor: {path}')
-    utila.file_replace(path, encrypted)
+    utila.file_replace_binary(path, encrypted)
 
 
 def filepath_new():

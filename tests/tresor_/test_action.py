@@ -12,7 +12,6 @@ import os
 import utila
 import utilasafe
 
-import tests.conftest
 import tresor
 
 
@@ -27,9 +26,7 @@ def test_action_file_new(tresornew):
 def test_tresor_encrypt(tresornew):
     content = b'Binary data'
     tresor.insert_file(content)
-    loaded = utila.file_read(os.path.join(tresornew, 'space/00000'))
-    loaded = int(loaded)
+    loaded = utila.file_read_binary(os.path.join(tresornew, 'space/00000'))
     assert loaded != content
-    private = utila.file_read(tests.conftest.PRIVATE)
-    decrypted = utilasafe.decrypt_public(str(loaded), private)
+    decrypted = utilasafe.decrypt_password(loaded)
     assert decrypted == content
