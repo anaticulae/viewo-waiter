@@ -44,7 +44,9 @@ def test_api_upload_directory_error(td):
     cmd = f'curl -F "file=@{filepath}" {api}'
     # TODO: VERIFY EXPECTED RESULT LATER
     completed = utila.run(cmd, expect=None)
-    assert 'read function returned funny value' in completed.stderr
+    linux = '{"error":"bad request","message":"not a pdf file"}' in completed.stdout
+    win = 'read function returned funny value' in completed.stderr
+    assert linux or win
 
 
 def test_api_upload_document_wrong_datatype(client):
