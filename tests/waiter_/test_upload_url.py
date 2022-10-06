@@ -38,7 +38,7 @@ def test_api_upload_from_url_with_error(source, client, expected_error):
     assert expected_error in result['message']
 
 
-def test_api_upload_from_url_too_large_file(client, testdir, httpserver):
+def test_api_upload_from_url_too_large_file(client, httpserver):
     content = b'%PDF-1.5' + b'0' * 1024 * 1024 * 100  # 100 MB
     httpserver.serve_content(content)
     source = httpserver.url

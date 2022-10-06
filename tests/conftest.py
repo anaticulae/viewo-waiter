@@ -12,6 +12,8 @@ import os
 import pytest
 import utilasafe
 import utilatest
+from utilatest import mp  # pylint:disable=W0611
+from utilatest import td  # pylint:disable=W0611
 
 import tresor.config
 import viewo_waiter
@@ -27,19 +29,19 @@ utilatest.setup(viewo_waiter.config.API_PREFIX)
 
 
 @pytest.fixture
-def tresornew(testdir, monkeypatch):
-    with monkeypatch.context() as context:
-        context.setenv(tresor.config.WAITER_TRESOR, str(testdir.tmpdir))
+def tresornew(td, mp):  # pylint:disable=W0621
+    with mp.context() as context:
+        context.setenv(tresor.config.WAITER_TRESOR, str(td.tmpdir))
         context.setenv(utilasafe.UTILASAFE_PUBLIC_KEY, str(PUBLIC))
-        yield testdir.tmpdir
+        yield td.tmpdir
 
 
 @pytest.fixture
-def app(testdir):
+def app(td):  # pylint:disable=W0621
     """Create and configure a new app instance for each test."""
 
-    todo = os.path.join(testdir.tmpdir, 'todo')
-    ready = os.path.join(testdir.tmpdir, 'ready')
+    todo = os.path.join(td.tmpdir, 'todo')
+    ready = os.path.join(td.tmpdir, 'ready')
 
     os.makedirs(todo)
     os.makedirs(ready)
@@ -50,7 +52,7 @@ def app(testdir):
     # create the app with common test config
     config = {
         'TESTING': True,
-        'COMMON': testdir.tmpdir,
+        'COMMON': td.tmpdir,
         'TODO': todo,
         'READY': ready,
     }

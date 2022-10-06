@@ -24,7 +24,7 @@ def test_api_upload_document_done(client):
     assert result['documentid']
 
 
-def test_api_upload_directory_error(testdir):
+def test_api_upload_directory_error(td):
     """Try to upload a windows folder."""
     host, port = 'localhost', 2345
     server = threading.Thread(
@@ -40,7 +40,7 @@ def test_api_upload_directory_error(testdir):
     # wait for startup
     time.sleep(1)
     api = f'http://{host}:{port}/api/v0/documents'
-    filepath = testdir.tmpdir
+    filepath = td.tmpdir
     cmd = f'curl -F "file=@{filepath}" {api}'
     # TODO: VERIFY EXPECTED RESULT LATER
     completed = utila.run(cmd, expect=None)
