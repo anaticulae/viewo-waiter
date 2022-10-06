@@ -59,7 +59,7 @@ def receive_resource(request) -> Loaded:  # pylint:disable=R0911,R0912
 
 def curlpdf(url: str) -> 'TmpFile':
     try:
-        with urllib.request.urlopen(
+        with urllib.request.urlopen(  # nosec
                 url,
                 timeout=viewo_waiter.config.FILE_READ_TIMEOUT,
         ) as webfile:
