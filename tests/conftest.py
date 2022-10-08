@@ -10,6 +10,7 @@
 import os
 
 import pytest
+import utila
 import utilasafe
 import utilatest
 from utilatest import mp  # pylint:disable=W0611
@@ -26,6 +27,9 @@ PUBLIC = os.path.join(viewo_waiter.ROOT, 'tests/rsa/public.pem')
 PRIVATE = os.path.join(viewo_waiter.ROOT, 'tests/rsa/private.pem')
 
 utilatest.setup(viewo_waiter.config.API_PREFIX)
+
+# required to access tresor correctly
+utila.cache_disable()
 
 
 @pytest.fixture

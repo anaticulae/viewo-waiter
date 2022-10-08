@@ -23,6 +23,7 @@ def tresor():
     return path
 
 
+@utila.cacheme
 def tresor_space():
     path = os.path.join(tresor(), 'space')
     os.makedirs(path, exist_ok=True)
