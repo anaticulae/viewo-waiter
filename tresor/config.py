@@ -14,6 +14,8 @@ import utila
 
 WAITER_TRESOR = 'WAITER_TRESOR'
 
+TRESOR_USE = 'TRESOR_USE'
+
 
 @utila.cacheme
 def tresor():
@@ -28,3 +30,7 @@ def tresor_space():
     path = os.path.join(tresor(), 'space')
     os.makedirs(path, exist_ok=True)
     return path
+
+
+def tresor_use():
+    return configo.env(TRESOR_USE, default=False)
