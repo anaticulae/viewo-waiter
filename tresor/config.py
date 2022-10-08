@@ -7,15 +7,17 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
-import functools
 import os
+
+import configo
+import utila
 
 WAITER_TRESOR = 'WAITER_TRESOR'
 
 
-@functools.lru_cache
+@utila.cacheme
 def tresor():
-    path = os.getenv(WAITER_TRESOR, None)
+    path = configo.env(WAITER_TRESOR, default=None)
     assert path, 'DEFINE: WAITER_TRESOR'
     os.makedirs(path, exist_ok=True)
     return path
