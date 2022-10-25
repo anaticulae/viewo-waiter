@@ -11,3 +11,4 @@ from tresor.action import filepath_new
 from tresor.action import insert_file
 from tresor.config import tresor
 from tresor.config import tresor_space
+from tresor.config import tresor_use

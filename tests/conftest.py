@@ -36,6 +36,7 @@ utila.cache_disable()
 def tresornew(td, mp):  # pylint:disable=W0621
     with mp.context() as context:
         context.setenv(tresor.config.WAITER_TRESOR, str(td.tmpdir))
+        context.setenv(tresor.config.TRESOR_USE, "True")
         context.setenv(utilasafe.UTILASAFE_PUBLIC_KEY, str(PUBLIC))
         yield td.tmpdir
 

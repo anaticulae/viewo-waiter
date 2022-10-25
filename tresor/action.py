@@ -14,6 +14,7 @@ import utila
 import utilasafe
 
 import tresor
+import tresor.config
 
 
 def insert_file(data: bytes, wait: bool = True):
@@ -29,7 +30,10 @@ def insert_file(data: bytes, wait: bool = True):
 
 
 def async_insert(path, data):
-    encrypted = utilasafe.encrypt_password(data)
+    if tresor.tresor_use():
+        encrypted = utilasafe.encrypt_password(data)
+    else:
+        encrypted = data
     utila.debug(f'write to tresor: {path}')
     utila.file_replace_binary(path, encrypted)
 
