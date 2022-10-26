@@ -12,13 +12,14 @@ import http
 import link
 import power
 import pytest
+import utila
 import utilatest
 
 import tests
 
 
 def test_api_upload_from_url(client, httpserver):
-    httpserver.serve_content(open(power.MASTER072_PDF, mode='br').read())
+    httpserver.serve_content(utila.file_read_binary(power.MASTER072_PDF))
     source = httpserver.url
     result = utilatest.apipost(client, '/documents', data={'url': source})
     assert result['documentid']

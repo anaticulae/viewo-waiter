@@ -33,7 +33,7 @@ def apiupload(
     assert field, path
     assert os.path.exists(path), path
     request = prefix + page
-    fields = werkzeug.datastructures.MultiDict([(field, open(path, 'rb'))])
+    fields = werkzeug.datastructures.MultiDict([(field, open(path, 'rb'))])  # pylint:disable=R1732
     response = client.post(request, data=fields, follow_redirects=True)
     assert response.status_code == expected, request + str(response)
     return decode(response, expected=expected)
