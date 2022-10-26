@@ -7,8 +7,12 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
+import configo
+
 MAX_FILE_SIZE = 16 * 1024 * 1024  # 16 Megabyte
 FILE_READ_TIMEOUT = 10  # 10 seconds timeout
 
 SECRET_KEY = b'helmut_max_power_abs29.nsTODOThisIsVerySecreyISwarTODO'
 API_PREFIX = '/api/v0'
+
+DOCUMENT_NAME_LENGTH = configo.HV_INT_PLUS(default=32)

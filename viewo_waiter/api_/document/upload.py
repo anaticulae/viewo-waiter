@@ -58,6 +58,8 @@ def receive_resource(request) -> Loaded:  # pylint:disable=R0911,R0912
 
 def secure_document_name(name: str) -> str:
     name = werkzeug.utils.secure_filename(name)
+    # shorten document name
+    name = name[0:viewo_waiter.config.DOCUMENT_NAME_LENGTH]
     return name
 
 
