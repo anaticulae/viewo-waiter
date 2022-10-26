@@ -8,7 +8,6 @@
 # =============================================================================
 
 import collections
-import os
 import urllib.error
 import urllib.request
 
@@ -47,14 +46,19 @@ def receive_resource(request) -> Loaded:  # pylint:disable=R0911,R0912
             # if user does not select file, browser also submit an empty
             # part without filename
             return viewo_api.bad('empty `file` field')
-        filename = os.path.split(pdf.filename)[1]
-        filename = werkzeug.utils.secure_filename(filename)
+        filename = utila.file_name(pdf.filename)
+        filename = secure_document_name(filename)
         header = pdf.stream.read(HEADER_READ_SIZE)
         if not valid_pdf(header):
             return viewo_api.bad('not a pdf file')
         # reset stream
         pdf.stream.seek(0)
     return Loaded(pdf, filename)
+
+
+def secure_document_name(name: str) -> str:
+    name = werkzeug.utils.secure_filename(name)
+    return name
 
 
 def curlpdf(url: str) -> 'TmpFile':
