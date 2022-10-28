@@ -11,6 +11,6 @@ import os
 
 from viewo_waiter.api.document import api_documents
 
-__version__ = '0.6.3'
+__version__ = '0.7.0'
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))

@@ -2,6 +2,22 @@
 
 Every noteable change is logged here.
 
+## v0.7.0 (2022-10-28)
+
+### Feature
+
+* convert to typed holy values (259edc387d3a)
+* limit upload name (ce088b2e0a01)
+* do not encrypt data when tresor is disabled (c6042933ca25)
+* add method to check that tresor is used (53eca35d42ac)
+* cache tresor path (8aeef32577f2)
+
+### Chore
+
+* upgrade baw (04461660c499)
+* upgrade requirements.txt (9508c5f283a6)
+* add configo (7a65b747ec98)
+
 ## v0.6.2
 
 ### Fix
