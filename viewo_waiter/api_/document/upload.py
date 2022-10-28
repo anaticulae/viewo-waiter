@@ -23,44 +23,53 @@ EXPECTED_PDFSTART = b'%PDF-1.'
 Loaded = collections.namedtuple('Loaded', 'pdf filename')
 
 
-def receive_resource(request) -> Loaded:  # pylint:disable=R0911,R0912
+def receive_resource(request) -> Loaded:
     # TODO: SECURITY: VERIFY THIS METHOD
     if 'url' in request.form:
-        # provide resource via link as url-field
-        posturl = request.form['url']
-        try:
-            pdf = curlpdf(posturl)
-            filename = 'cloud.pdf'
-        except FileTooLarge:
-            return viewo_api.bad('file too large')
-        except InvalidResource:
-            return viewo_api.bad('require pdf file')
-        except InvalidUrl:
-            return viewo_api.bad('invalid url')
-    else:
-        # upload resource via upload-file dialog
-        if not request.files:
-            return viewo_api.bad('missing `file` field')
-        pdf = request.files['file']
-        if not pdf.filename:
-            # if user does not select file, browser also submit an empty
-            # part without filename
-            return viewo_api.bad('empty `file` field')
-        filename = utila.file_name(pdf.filename)
-        filename = secure_document_name(filename)
-        header = pdf.stream.read(HEADER_READ_SIZE)
-        if not valid_pdf(header):
-            return viewo_api.bad('not a pdf file')
-        # reset stream
-        pdf.stream.seek(0)
-    return Loaded(pdf, filename)
+        return from_url(request)
+    return from_field(request)
 
 
-def secure_document_name(name: str) -> str:
-    name = werkzeug.utils.secure_filename(name)
-    # shorten document name
-    name = name[0:viewo_waiter.config.DOCUMENT_NAME_LENGTH]
-    return name
+def from_url(request) -> Loaded:
+    # provide resource via link as url-field
+    posturl = request.form['url']
+    try:
+        pdf = curlpdf(posturl)
+    except FileTooLarge:
+        return viewo_api.bad('file too large')
+    except InvalidResource:
+        return viewo_api.bad('require pdf file')
+    except InvalidUrl:
+        return viewo_api.bad('invalid url')
+    filename = 'cloud.pdf'
+    result = Loaded(
+        pdf,
+        filename,
+    )
+    return result
+
+
+def from_field(request) -> Loaded:
+    # upload resource via upload-file dialog
+    if not request.files:
+        return viewo_api.bad('missing `file` field')
+    pdf = request.files['file']
+    if not pdf.filename:
+        # if user does not select file, browser also submit an empty
+        # part without filename
+        return viewo_api.bad('empty `file` field')
+    filename = utila.file_name(pdf.filename)
+    filename = secure_document_name(filename)
+    header = pdf.stream.read(HEADER_READ_SIZE)
+    if not valid_pdf(header):
+        return viewo_api.bad('not a pdf file')
+    # reset stream
+    pdf.stream.seek(0)
+    result = Loaded(
+        pdf,
+        filename,
+    )
+    return result
 
 
 def curlpdf(url: str) -> 'TmpFile':
@@ -86,6 +95,13 @@ def curlpdf(url: str) -> 'TmpFile':
 
     filecontent = header + content
     return TmpFile(filecontent)
+
+
+def secure_document_name(name: str) -> str:
+    name = werkzeug.utils.secure_filename(name)
+    # shorten document name
+    name = name[0:viewo_waiter.config.DOCUMENT_NAME_LENGTH]
+    return name
 
 
 class CurlError(ValueError):
