@@ -9,10 +9,11 @@
 
 import configo
 
-MAX_FILE_SIZE = 16 * 1024 * 1024  # 16 Megabyte
-FILE_READ_TIMEOUT = 10  # 10 seconds timeout
+MAX_FILE_SIZE = configo.HV_MB(default=16)
 
-SECRET_KEY = b'helmut_max_power_abs29.nsTODOThisIsVerySecreyISwarTODO'
-API_PREFIX = '/api/v0'
+FILE_READ_TIMEOUT = configo.HV_SECOND(default=10)
+
+SECRET_KEY = configo.HV_SECRET(default='helmut_max_pr_absIsVe').value
+API_PREFIX = configo.HV_API(default='/api/v0').value
 
 DOCUMENT_NAME_LENGTH = configo.HV_INT_PLUS(default=32)
