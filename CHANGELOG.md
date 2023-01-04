@@ -2,6 +2,19 @@
 
 Every noteable change is logged here.
 
+## v0.7.1 (2023-01-04)
+
+### Documentation
+
+* happy New Year! (417d6c547abd)
+
+### Chore
+
+* remove default behavior (3424c0b57ee1)
+* use quick install (46a5b47847b2)
+* upgrade requirements.txt (5c421107ceb1)
+* upgrade pipeline (046130302c1b)
+
 ## v0.7.0 (2022-10-28)
 
 ### Feature
