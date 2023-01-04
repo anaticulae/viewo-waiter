@@ -8,50 +8,19 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
-import os
-import re
+import utila
 
-import setuptools
-
-ROOT = os.path.abspath(os.path.dirname(__file__))
-
-with open(os.path.join(ROOT, 'README.md'), encoding='utf8') as fp:
-    README = fp.read()
-
-with open(os.path.join(ROOT, 'viewo_waiter/__init__.py'),
-          encoding='utf8') as fp:
-    VERSION = re.search(r'__version__ = \'(.*?)\'', fp.read()).group(1)
-
-with open(os.path.join(ROOT, "requirements.txt"), encoding='utf8') as fp:
-    REQUIRES = [line for line in fp.readlines() if line and '#' not in line]
+PACKAGES = [
+    'tresor',
+    'viewo_waiter',
+    'viewo_waiter.api',
+    'viewo_waiter.api.document',
+    'viewo_waiter.api_',
+    'viewo_waiter.api_.document',
+]
+ENTRY_POINTS = dict(console_scripts=[
+    'viewo_waiter = viewo_waiter.cli:main',
+])
 
 if __name__ == "__main__":
-    # allow setup.py to run from another directory
-    os.chdir(ROOT)
-    setuptools.setup(
-        author='Helmut Konrad Schewe',
-        author_email='info@checkitweg.de',
-        description='receive user data',
-        install_requires=REQUIRES,
-        long_description=README,
-        name='viewo_waiter',
-        platforms='any',
-        url='https://dev.package.checkitweg.de/viewo_waiter',
-        version=VERSION,
-        zip_safe=False,  # create 'zip'-file if True. Don't do it!
-        classifiers=[
-            'Programming Language :: Python :: 3.7',
-            'Programming Language :: Python :: 3.8',
-        ],
-        packages=[
-            'tresor',
-            'viewo_waiter',
-            'viewo_waiter.api',
-            'viewo_waiter.api.document',
-            'viewo_waiter.api_',
-            'viewo_waiter.api_.document',
-        ],
-        entry_points={
-            'console_scripts': ['viewo_waiter = viewo_waiter.cli:main'],
-        },
-    )
+    utila.install(__file__)
