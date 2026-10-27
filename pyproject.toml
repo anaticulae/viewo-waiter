@@ -98,4 +98,5 @@ exclude = [
 [tool.hoverpower]
 packages = [
     "DOCU",
+    "MASTER",
 ]
