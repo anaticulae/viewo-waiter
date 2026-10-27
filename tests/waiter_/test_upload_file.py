@@ -29,11 +29,13 @@ def test_api_upload_directory_error(td):
     host, port = 'localhost', 2345
     server = threading.Thread(
         target=viewo_waiter.app.run_app,
-        kwargs=dict(
-            host=host,
-            port=port,
-            config=dict(TESTING=True),
-        ),
+        kwargs={
+            'host': host,
+            'port': port,
+            'config': {
+                'TESTING': True
+            },
+        },
         daemon=True,
     )
     server.start()

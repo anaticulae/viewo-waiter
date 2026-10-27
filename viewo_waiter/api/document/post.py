@@ -62,10 +62,10 @@ def optional_links(documentid):
     optional = {}
     try:
         # yapf:disable
-        optional = dict(
-            document=flask.url_for('api_documents.document_get', documentid=documentid),
-            link=flask.url_for('waiting.waiting_view', process=documentid),
-        )
+        optional = {
+            'document': flask.url_for('api_documents.document_get', documentid=documentid),
+            'link': flask.url_for('waiting.waiting_view', process=documentid),
+        }
         # yapf:enable
     except werkzeug.routing.BuildError:
         utilo.debug('skip routes: api_documents.document_get, '

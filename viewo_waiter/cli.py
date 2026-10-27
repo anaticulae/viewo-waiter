@@ -36,7 +36,7 @@ def main():
     host, port = argv.host, int(argv.port)
     # set verbose level
     utilo.level_setup(argv.verbose)
-    config = dict(safe=argv.safe,)
+    config = {'safe': argv.safe}
     viewo_waiter.app.run_app(
         host,
         port,
