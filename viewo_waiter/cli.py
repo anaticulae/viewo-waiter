@@ -9,12 +9,12 @@
 
 import argparse
 
-import utila
+import utilo
 
 import viewo_waiter.app
 
 
-@utila.saveme
+@utilo.saveme
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--host', default='localhost')
@@ -35,11 +35,11 @@ def main():
     argv = parser.parse_args()
     host, port = argv.host, int(argv.port)
     # set verbose level
-    utila.level_setup(argv.verbose)
+    utilo.level_setup(argv.verbose)
     config = dict(safe=argv.safe,)
     viewo_waiter.app.run_app(
         host,
         port,
         config,
     )
-    return utila.SUCCESS
+    return utilo.SUCCESS

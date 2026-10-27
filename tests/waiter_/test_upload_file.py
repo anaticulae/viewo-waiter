@@ -11,16 +11,16 @@ import http
 import threading
 import time
 
-import link
-import utila
-import utilatest
+import qvlink
+import utilo
+import utilotest
 
 import tests
 import viewo_waiter.app
 
 
 def test_api_upload_document_done(client):
-    result = utilatest.apiupload(client, '/documents', 'file', tests.MINIMAL)
+    result = utilotest.apiupload(client, '/documents', 'file', tests.MINIMAL)
     assert result['documentid']
 
 
@@ -43,14 +43,14 @@ def test_api_upload_directory_error(td):
     filepath = td.tmpdir
     cmd = f'curl -F "file=@{filepath}" {api}'
     # TODO: VERIFY EXPECTED RESULT LATER
-    completed = utila.run(cmd, expect=None)
+    completed = utilo.run(cmd, expect=None)
     linux = '{"error":"bad request","message":"not a pdf file"}' in completed.stdout
     win = 'read function returned funny value' in completed.stderr
     assert linux or win
 
 
 def test_api_upload_document_wrong_datatype(client):
-    utilatest.apiupload(
+    utilotest.apiupload(
         client,
         '/documents',
         'file',
@@ -62,16 +62,16 @@ def test_api_upload_document_wrong_datatype(client):
 def test_api_upload_with_wrong_field(client):
     """Upload one file and check if it is saved at common todo folder"""
     # count files in todo folder
-    files_before = link.count_todo()
+    files_before = qvlink.count_todo()
 
     # Upload with wrong field
-    utilatest.apiupload(
+    utilotest.apiupload(
         client,
         page='/documents',
         field='o_o',
         path=tests.MINIMAL,
         expected=http.HTTPStatus.BAD_REQUEST,
     )
-    files_after = link.count_todo()
+    files_after = qvlink.count_todo()
     # check that no file was uploaded
     assert files_after == files_before

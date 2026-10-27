@@ -11,7 +11,7 @@ import collections
 import urllib.error
 import urllib.request
 
-import utila
+import utilo
 import viewo_api
 import werkzeug.utils
 
@@ -31,7 +31,7 @@ def receive_resource(request) -> Loaded:
 
 
 def from_url(request) -> Loaded:
-    # provide resource via link as url-field
+    # provide resource via qvlink as url-field
     posturl = request.form['url']
     try:
         pdf = curlpdf(posturl)
@@ -58,7 +58,7 @@ def from_field(request) -> Loaded:
         # if user does not select file, browser also submit an empty
         # part without filename
         return viewo_api.bad('empty `file` field')
-    filename = utila.file_name(pdf.filename)
+    filename = utilo.file_name(pdf.filename)
     filename = secure_document_name(filename)
     header = pdf.stream.read(HEADER_READ_SIZE)
     if not valid_pdf(header):
@@ -81,16 +81,16 @@ def curlpdf(url: str) -> 'TmpFile':
             header = webfile.read(HEADER_READ_SIZE)
             # %PDF-1.5 for example
             if not valid_pdf(header):
-                utila.error(f'no pdf file: {url}')
+                utilo.error(f'no pdf file: {url}')
                 raise InvalidResource(url)
             todo = viewo_waiter.config.MAX_FILE_SIZE - HEADER_READ_SIZE
             content = webfile.read(todo)
             if webfile.read(1) != b'':
                 # there are some bytes left
-                utila.error(f'file too large: {url}')
+                utilo.error(f'file too large: {url}')
                 raise FileTooLarge(url)
     except urllib.error.URLError as error:
-        utila.error(f'invalid url: {url}')
+        utilo.error(f'invalid url: {url}')
         raise InvalidUrl(url) from error
 
     filecontent = header + content
@@ -129,7 +129,7 @@ class TmpFile:
         self.content = content
 
     def save(self, path: str):
-        utila.file_replace_binary(path, self.content)
+        utilo.file_replace_binary(path, self.content)
 
 
 def valid_pdf(data):

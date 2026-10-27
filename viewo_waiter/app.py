@@ -7,10 +7,10 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
-import configo
+import configos
 import flask
 import flask_login
-import utila
+import utilo
 import viewo_api
 
 import viewo_waiter
@@ -56,7 +56,7 @@ def configure(app, config):
     if not config:
         # Production environment
         # load the instance config, if it exists
-        common_, todo_, ready_ = configo.environment()
+        common_, todo_, ready_ = configos.environment()
         app.config['COMMON'] = common_
         app.config['TODO'] = todo_
         app.config['READY'] = ready_
@@ -79,12 +79,12 @@ def load_user(userid):
 
 
 def logsetup(app, host, port):
-    utila.log('\nSETUP VIEWO_WAITER\n')
-    utila.log(f'host: {host}')
-    utila.log(f'port: {port}')
+    utilo.log('\nSETUP VIEWO_WAITER\n')
+    utilo.log(f'host: {host}')
+    utilo.log(f'port: {port}')
     for key in 'USE_SAFE COMMON TODO READY'.split():
-        utila.log(f'{key.lower()}:{app.config.get(key, None)}')
-    utila.log()
+        utilo.log(f'{key.lower()}:{app.config.get(key, None)}')
+    utilo.log()
 
 
 # def localize_callback(message: str) -> str:

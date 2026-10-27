@@ -9,19 +9,19 @@
 
 import http
 
-import link
-import power
+import hoverpower
 import pytest
-import utila
-import utilatest
+import qvlink
+import utilo
+import utilotest
 
 import tests
 
 
 def test_api_upload_from_url(client, httpserver):
-    httpserver.serve_content(utila.file_read_binary(power.MASTER072_PDF))
+    httpserver.serve_content(utilo.file_read_binary(hoverpower.MASTER072_PDF))
     source = httpserver.url
-    result = utilatest.apipost(client, '/documents', data={'url': source})
+    result = utilotest.apipost(client, '/documents', data={'url': source})
     assert result['documentid']
 
 
@@ -30,7 +30,7 @@ def test_api_upload_from_url(client, httpserver):
     pytest.param(f'file:///{__file__}', 'require pdf', id='no pdf'),
 ])
 def test_api_upload_from_url_with_error(source, client, expected_error):
-    result = utilatest.apipost(
+    result = utilotest.apipost(
         client,
         '/documents',
         data={'url': source},
@@ -43,7 +43,7 @@ def test_api_upload_from_url_too_large_file(client, httpserver):
     content = b'%PDF-1.5' + b'0' * 1024 * 1024 * 100  # 100 MB
     httpserver.serve_content(content)
     source = httpserver.url
-    utilatest.apipost(
+    utilotest.apipost(
         client,
         page='/documents',
         data={'url': source},
@@ -54,14 +54,14 @@ def test_api_upload_from_url_too_large_file(client, httpserver):
 def test_api_upload_file_url(client):
     """Upload one file and check if it is saved at common todo folder"""
     # count files in todo folder
-    files_before = link.count_todo()
+    files_before = qvlink.count_todo()
 
-    utilatest.apiupload(
+    utilotest.apiupload(
         client,
         page='/documents',
         field='file',
         path=tests.MINIMAL,
     )
-    files_after = link.count_todo()
+    files_after = qvlink.count_todo()
     # check if file was uploaded
     assert files_after == files_before + 1

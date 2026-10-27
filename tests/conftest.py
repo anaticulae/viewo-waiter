@@ -10,11 +10,11 @@
 import os
 
 import pytest
-import utila
-import utilasafe
-import utilatest
-from utilatest import mp  # pylint:disable=W0611
-from utilatest import td  # pylint:disable=W0611
+import utilo
+import utilosafe
+import utilotest
+from utilotest import mp  # pylint:disable=W0611
+from utilotest import td  # pylint:disable=W0611
 
 import tresor.config
 import viewo_waiter
@@ -26,10 +26,10 @@ pytest_plugins = ['pytester', 'xdist']  # pylint: disable=invalid-name
 PUBLIC = os.path.join(viewo_waiter.ROOT, 'tests/rsa/public.pem')
 PRIVATE = os.path.join(viewo_waiter.ROOT, 'tests/rsa/private.pem')
 
-utilatest.setup(viewo_waiter.config.API_PREFIX)
+utilotest.setup(viewo_waiter.config.API_PREFIX)
 
 # required to access tresor correctly
-utila.cache_disable()
+utilo.cache_disable()
 
 
 @pytest.fixture
@@ -37,7 +37,7 @@ def tresornew(td, mp):  # pylint:disable=W0621
     with mp.context() as context:
         context.setenv(tresor.config.WAITER_TRESOR, str(td.tmpdir))
         context.setenv(tresor.config.TRESOR_USE, "True")
-        context.setenv(utilasafe.UTILASAFE_PUBLIC_KEY, str(PUBLIC))
+        context.setenv(utilosafe.UTILOSAFE_PUBLIC_KEY, str(PUBLIC))
         yield td.tmpdir
 
 

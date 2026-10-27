@@ -10,8 +10,8 @@
 import os
 
 import flask_login
-import link
-import utila
+import qvlink
+import utilo
 import viewo_api
 import viewo_api.config
 import viewo_api.user
@@ -31,7 +31,7 @@ def create_document(resource, public: bool, usesafe: bool = False):
 def user_account(public: bool = False):
     if public:
         nopassword = ''
-        return link.PUBLIC_OWNER, nopassword
+        return qvlink.PUBLIC_OWNER, nopassword
     password = viewo_api.password_generate()
     userid = flask_login.current_user.get_id()
     if not userid:
@@ -45,7 +45,7 @@ def user_account(public: bool = False):
 
 
 def store_resource(pdf, filename, userid, usesafe: bool = False):
-    todo = link.create_todo(
+    todo = qvlink.create_todo(
         file=pdf,
         filename=filename,
         todopath=viewo_api.config.todo(),
@@ -53,7 +53,7 @@ def store_resource(pdf, filename, userid, usesafe: bool = False):
     )
     if usesafe:
         storedpath = os.path.join(todo, os.path.split(todo)[1])
-        loaded = utila.file_read_binary(storedpath)
+        loaded = utilo.file_read_binary(storedpath)
         tresor.insert_file(loaded, wait=False)
     _, resource = os.path.split(todo)
     # allow user to access document

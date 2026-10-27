@@ -10,8 +10,8 @@
 import multiprocessing
 import os
 
-import utila
-import utilasafe
+import utilo
+import utilosafe
 
 import tresor
 import tresor.config
@@ -21,7 +21,7 @@ def insert_file(data: bytes, wait: bool = True):
     assert data, 'empty data'
     path = filepath_new()
     # create file to avoid threading side effects
-    utila.file_create(path, '')
+    utilo.file_create(path, '')
     if wait:
         async_insert(path, data)
     else:
@@ -31,16 +31,16 @@ def insert_file(data: bytes, wait: bool = True):
 
 def async_insert(path, data):
     if tresor.tresor_use():
-        encrypted = utilasafe.encrypt_password(data)
+        encrypted = utilosafe.encrypt_password(data)
     else:
         encrypted = data
-    utila.debug(f'write to tresor: {path}')
-    utila.file_replace_binary(path, encrypted)
+    utilo.debug(f'write to tresor: {path}')
+    utilo.file_replace_binary(path, encrypted)
 
 
 def filepath_new():
     spacepath = tresor.tresor_space()
-    filecount = len(utila.file_list(spacepath))
+    filecount = len(utilo.file_list(spacepath))
     filename = f'{filecount}'.zfill(5)
     result = os.path.join(spacepath, filename)
     return result

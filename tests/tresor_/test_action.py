@@ -9,8 +9,8 @@
 
 import os
 
-import utila
-import utilasafe
+import utilo
+import utilosafe
 
 import tresor
 
@@ -18,15 +18,15 @@ import tresor
 def test_action_file_new(tresornew):
     content = b'Binary data'
     tresor.insert_file(content)
-    assert len(utila.file_list(tresornew)) == 1
+    assert len(utilo.file_list(tresornew)) == 1
     tresor.insert_file(content)
-    assert len(utila.file_list(tresornew)) == 2
+    assert len(utilo.file_list(tresornew)) == 2
 
 
 def test_tresor_encrypt(tresornew):
     content = b'Binary data'
     tresor.insert_file(content)
-    loaded = utila.file_read_binary(os.path.join(tresornew, 'space/00000'))
+    loaded = utilo.file_read_binary(os.path.join(tresornew, 'space/00000'))
     assert loaded != content
-    decrypted = utilasafe.decrypt_password(loaded)
+    decrypted = utilosafe.decrypt_password(loaded)
     assert decrypted == content

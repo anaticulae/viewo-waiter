@@ -9,23 +9,23 @@
 
 import os
 
-import configo
-import utila
+import configos
+import utilo
 
 WAITER_TRESOR = 'WAITER_TRESOR'
 
 TRESOR_USE = 'TRESOR_USE'
 
 
-@utila.cacheme
+@utilo.cacheme
 def tresor():
-    path = configo.env(WAITER_TRESOR, default=None)
+    path = configos.env(WAITER_TRESOR, default=None)
     assert path, 'DEFINE: WAITER_TRESOR'
     os.makedirs(path, exist_ok=True)
     return path
 
 
-@utila.cacheme
+@utilo.cacheme
 def tresor_space():
     path = os.path.join(tresor(), 'space')
     os.makedirs(path, exist_ok=True)
@@ -33,4 +33,4 @@ def tresor_space():
 
 
 def tresor_use():
-    return configo.env(TRESOR_USE, default=False)
+    return configos.env(TRESOR_USE, default=False)

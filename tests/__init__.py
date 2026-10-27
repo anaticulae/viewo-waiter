@@ -13,12 +13,12 @@ import json
 import json.decoder
 import os
 
-import power
+import hoverpower
 import werkzeug.datastructures
 
 import viewo_waiter.config
 
-MINIMAL = power.DOCU007_PDF
+MINIMAL = hoverpower.DOCU007_PDF
 
 
 def apiupload(

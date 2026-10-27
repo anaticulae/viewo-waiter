@@ -10,7 +10,7 @@
 import contextlib
 
 import flask
-import utila
+import utilo
 import viewo_api
 import werkzeug.routing
 
@@ -44,7 +44,7 @@ def document_create() -> str:
 
 def public(request) -> bool:
     # if public flag is provided, document is access able by all user
-    result = utila.str2bool(request.args.get('public', False))
+    result = utilo.str2bool(request.args.get('public', False))
     return result
 
 
@@ -59,6 +59,7 @@ def optional_links(documentid):
 
     These are not necessary for usage as a service.
     """
+    optional = {}
     try:
         # yapf:disable
         optional = dict(
@@ -67,7 +68,6 @@ def optional_links(documentid):
         )
         # yapf:enable
     except werkzeug.routing.BuildError:
-        optional = {}
-        utila.debug('skip routes: api_documents.document_get, '
+        utilo.debug('skip routes: api_documents.document_get, '
                     'waiting.waiting_view')
     return optional
