@@ -9,6 +9,9 @@
 
 FROM ghcr.io/anaticulae/baw:v1.90.1
 
+# required for testing
+RUN apk add --no-cache curl
+
 ENV HOVERPOWER_STORE=/var/workdir/hoverpower/repo
 
 WORKDIR /var/install
