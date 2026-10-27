@@ -48,7 +48,8 @@ def test_api_upload_directory_error(td):
     completed = utilo.run(cmd, expect=None)
     linux = '{"error":"bad request","message":"not a pdf file"}' in completed.stdout
     win = 'read function returned funny value' in completed.stderr
-    assert linux or win
+    logging = f'{completed.stdout}\n{"="*30}\n{completed.stderr}'
+    assert linux or win, logging
 
 
 def test_api_upload_document_wrong_datatype(client):
