@@ -7,10 +7,11 @@
 # be prosecuted under federal law. Its content is company confidential.
 #==============================================================================
 
+import importlib.metadata
 import os
 
 from viewo_waiter.api.document import api_documents
 
-__version__ = '0.7.1'
+__version__ = importlib.metadata.version('viewo_waiter')
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
