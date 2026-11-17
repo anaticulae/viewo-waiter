@@ -7,7 +7,7 @@
 # be prosecuted under federal law. Its content is company confidential.
 # =============================================================================
 
-FROM ghcr.io/anaticulae/baw:v1.90.1
+FROM ghcr.io/anaticulae/baw:v1.90.4
 
 # required for testing
 RUN apk add --no-cache curl
